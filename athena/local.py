@@ -14,8 +14,10 @@ import matplotlib.cm as cm
 from scipy.linalg import sqrtm, inv
 
 from sklearn.cluster import KMeans
-from sklearn_extra.cluster import KMedoids
 from sklearn.metrics import r2_score, mean_absolute_error, silhouette_score
+
+# Import KMedoids from our compatibility layer which handles NumPy version differences
+from .compatibility import KMedoids
 
 import GPy
 from athena import Normalizer, ActiveSubspaces
