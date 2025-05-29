@@ -21,7 +21,7 @@ KEYWORDS = (
 )
 
 REQUIRED = [
-    'numpy', 'scipy', 'matplotlib', 'torch', 'GPyOpt', 'scikit-learn', 'scikit-learn-extra'
+    'numpy<2.0.0', 'scipy', 'matplotlib', 'torch', 'bayesian-optimization', 'scikit-learn', 'scikit-learn-extra'
 ]
 
 EXTRAS = {
