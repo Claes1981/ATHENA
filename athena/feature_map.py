@@ -39,6 +39,7 @@ class FeatureMap():
 
     :raises TypeError
     """
+
     def __init__(self, distr, bias, input_dim, n_features, params, sigma_f):
         if callable(distr):
             self.distr = distr
@@ -202,9 +203,11 @@ class FeatureMap():
             # Reformat bounds for BayesianOptimization package format
             # BayesianOptimization uses a dictionary of parameter names and their range tuples
             # Unlike GPyOpt which used a list of dictionaries with 'name', 'type', and 'domain' keys
-            bounds_dict = {f'var_{i}': (bound.start, bound.stop) 
-                         for i, bound in enumerate(bounds)}
-            
+            bounds_dict = {
+                f'var_{i}': (bound.start, bound.stop)
+                for i, bound in enumerate(bounds)
+            }
+
             # Create wrapper for the objective function to handle the format difference
             # BayesianOptimization passes parameters as keyword arguments, not as an array
             def bayes_wrapper(**kwargs):
@@ -213,25 +216,24 @@ class FeatureMap():
                 # BayesianOptimization maximizes functions by default, but we want to minimize
                 # So we negate the score (lower scores are better in our original function)
                 return -func(x, best, **fn_args)
-            
+
             # Initialize optimizer with our wrapper function and parameter bounds
             optimizer = BayesianOptimization(
                 f=bayes_wrapper,
                 pbounds=bounds_dict,
                 random_state=42  # For reproducible results
             )
-            
+
             # Run optimization
             # init_points: how many steps of random exploration to perform
             # n_iter: how many steps of bayesian optimization to perform
-            optimizer.maximize(
-                init_points=2,
-                n_iter=maxiter
-            )
-            
+            optimizer.maximize(init_points=2, n_iter=maxiter)
+
             # Extract the best parameters found and transform back
             # optimizer.max contains the best score and parameters found
-            best_params = [optimizer.max['params'][f'var_{i}'] for i in range(len(bounds))]
+            best_params = [
+                optimizer.max['params'][f'var_{i}'] for i in range(len(bounds))
+            ]
             # Apply 10^ transformation as done in the original implementation
             self.params = 10**np.array(best_params)
         else:

@@ -36,6 +36,7 @@ class MaximumASDimensionReached(Exception):
 class ClusterBase():
     """Local Active Subspaces clustering Base class.
     """
+
     def __init__(self):
 
         self.inputs = None
@@ -210,6 +211,7 @@ class ClusterBase():
 
 class KMeansAS(ClusterBase):
     """Clustering with k-means"""
+
     def __init__(self):
         super().__init__()
         self.centers = None
@@ -231,6 +233,7 @@ class KMeansAS(ClusterBase):
 
 class KMedoidsAS(ClusterBase):
     """Clustering with k-medoids"""
+
     def __init__(self):
         super().__init__()
         self.centers = None
@@ -257,6 +260,7 @@ class KMedoidsAS(ClusterBase):
 
 
 class TopDownHierarchicalAS(ClusterBase):
+
     def __init__(self):
         """TODO check states logic.
         1. 2 and 4 are exclusives
@@ -402,7 +406,9 @@ class TopDownHierarchicalAS(ClusterBase):
 
     def refine_one_step(self):
         """Increase the dimension of the Active Subspace once, when possible."""
+
         class LeafUpdate(object):
+
             def __init__(self):
                 self.score = 0
                 self.leaves_list = []
@@ -437,6 +443,7 @@ class TopDownHierarchicalAS(ClusterBase):
         print("Start refining: increasing the as dimension when possible.")
 
         class CallRefine(object):
+
             def __init__(self, minimum_score):
                 self.min = minimum_score
 
@@ -474,7 +481,9 @@ class TopDownHierarchicalAS(ClusterBase):
 
     def _print_leaves_score(self):
         """Print the information of every leaf."""
+
         class ComputeScore(object):
+
             def __init__(self):
                 self.n_leaves = 0
                 self.leaves_dim = []
@@ -495,7 +504,9 @@ class TopDownHierarchicalAS(ClusterBase):
 
     def assign_leaf_labels(self):
         """Assign integer labels to the leaves."""
+
         class LeafLabels(object):
+
             def __init__(self):
                 self.labels_counter = 0
 
@@ -508,6 +519,7 @@ class TopDownHierarchicalAS(ClusterBase):
 
     def reset_gprs(self):
         """Reset the GPRs of every leaf and root."""
+
         def reset_gpr(node):
             node.gpr = None
             node.ss = None
@@ -519,7 +531,9 @@ class TopDownHierarchicalAS(ClusterBase):
                       save_data=True,
                       plot=True,
                       save=True):
+
         class SaveLeafInfo(object):
+
             def __init__(self):
                 self.n_leaves = 0
                 self.n_elems = []
@@ -691,6 +705,7 @@ class TopDownHierarchicalAS(ClusterBase):
 
 
 class TopDownNode():
+
     def __init__(self, parent, node_indexes, val_indexes, tree_obj):
         """A TopDownNode is defined by the indexes of the triplets (inputs,
         outputs, gradients) of the training data and the parent node. The root
@@ -822,6 +837,7 @@ class TopDownNode():
     class NormalizeDivisive():
         """Inner class for normalization of inputs, gradients w.r.t. local
         clusters"""
+
         def __init__(self, norm_type, ind, inputs):
             self.type = norm_type
 
@@ -978,7 +994,8 @@ class TopDownNode():
                 return state, self.children
 
             # check if clustering is possible
-            if self.ind.shape[0] < self.hierarchical.total_clusters + n_clusters:
+            if self.ind.shape[
+                    0] < self.hierarchical.total_clusters + n_clusters:
                 state.add(5)
                 _log.debug("Refine returns 5 : " + str(state) +
                            " and list length " + str(len(self.children)))

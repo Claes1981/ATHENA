@@ -7,6 +7,7 @@ from athena.projection_factory import ProjectionFactory
 
 
 class TestProjectionFactory(TestCase):
+
     def test_init_distr_01(self):
         fm = FeatureMap(distr='beta',
                         bias=None,
@@ -186,9 +187,8 @@ class TestProjectionFactory(TestCase):
                                  fn_args={'csv': csv},
                                  maxiter=10,
                                  save_file=False)[1]
-        true = np.array([[-0.781768, -1.871064],
-                         [-0.545585, -1.13183],
-                         [1.961803,  0.95774]])
+        true = np.array([[-0.781768, -1.871064], [-0.545585, -1.13183],
+                         [1.961803, 0.95774]])
         np.testing.assert_array_almost_equal(true, best)
 
     def test_dual_annealing(self):
@@ -237,11 +237,11 @@ class TestProjectionFactory(TestCase):
                               folds=2,
                               subspace=ss)
         best = fm.tune_pr_matrix(func=average_rrmse,
-                                bounds=[slice(-2, 1, 0.2) for _ in range(1)],
-                                fn_args={'csv': csv},
-                                method='bso',
-                                maxiter=10,
-                                save_file=False)[1]
+                                 bounds=[slice(-2, 1, 0.2) for _ in range(1)],
+                                 fn_args={'csv': csv},
+                                 method='bso',
+                                 maxiter=10,
+                                 save_file=False)[1]
         # We don't check for exact values since the optimizer might give slightly different results,
         # but we verify the shape and type of the output
         self.assertEqual(best.shape, (3, 2))
