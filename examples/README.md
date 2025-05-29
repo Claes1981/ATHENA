@@ -4,7 +4,7 @@ This directory contains example scripts demonstrating ATHENA's functionality.
 
 ## Feature Map Bayesian Optimization Example
 
-`feature_map_bayes_opt_example.py` demonstrates the use of the 
+`feature_map_bayes_opt_example.py` demonstrates the use of the
 `bayesian-optimization` package for tuning feature map parameters in ATHENA's
 Kernel Active Subspaces.
 
@@ -20,5 +20,4 @@ To run the example:
 python feature_map_bayes_opt_example.py
 ```
 
-This shows how the `'bso'` method in `tune_pr_matrix` now uses the 
-`bayesian-optimization` package as a replacement for the previous GPyOpt dependency.
+This shows how the `'bso'` method in `tune_pr_matrix` now uses the`bayesian-optimization` package as a replacement for the previous GPyOpt dependency.
