@@ -19,7 +19,11 @@ from sklearn.metrics import r2_score, mean_absolute_error, silhouette_score
 # Import KMedoids from our compatibility layer which handles NumPy version differences
 from .compatibility import KMedoids
 
-import GPy
+try:
+    import GPy
+except ImportError:
+    pass
+
 from athena import Normalizer, ActiveSubspaces
 
 _log = logging.getLogger('hierarchical')
